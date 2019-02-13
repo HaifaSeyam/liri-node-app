@@ -118,7 +118,84 @@ var spotifyThis = function(song){
 }/*End of Spotify-This Function*/
 
 /*Start of Movie-This Function*/
-var movieThis = function(){} /*End of Movie-This Function*/
+var movieThis = function(movie){
+    if(movie === undefined || movie == null || movie.length <= 0){
+        axios.get("http://www.omdbapi.com/?t=Mr.+Nobody.&y=&plot=short&apikey=trilogy")
+        .then(function(response) {
+            var movieTitle = response.data.Title;
+            var relaseYear = response.data.Year;
+            var IMDBRating = response.data.imdbRating;
+            var rottenTomatoesRating = response.data.Ratings[1].Value;
+            var prodCountry = response.data.Country ;
+            var movieLanguage = response.data.Language;
+            var plot = response.data.Plot;
+            var actors = response.data.Actors;
+
+            console.log("Title: " + movieTitle + "\n" + 
+            "Releasing Year: " + relaseYear + "\n" +
+            "IMDB Rating: " + IMDBRating  + "\n" +
+            "Rotten Tomatoes Rating: " + rottenTomatoesRating + "\n" +
+            "Producing Country: " + prodCountry + "\n" +
+            "Language of the movie: " + movieLanguage + "\n" +
+            "Plot: " + plot + "\n" +
+            "Actors: " + actors);
+
+            fs.appendFile("log.txt", "\n" +
+            "Title: " + movieTitle + "\n" + 
+            "Releasing Year: " + relaseYear + "\n" +
+            "IMDB Rating: " + IMDBRating  + "\n" +
+            "Rotten Tomatoes Rating: " + rottenTomatoesRating + "\n" +
+            "Producing Country: " + prodCountry + "\n" +
+            "Language of the movie: " + movieLanguage + "\n" +
+            "Plot: " + plot + "\n" +
+            "Actors: " + actors + "\n" + 
+            "-----------------------------------------------------------", function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+                }); 
+
+
+        });
+        
+    } else {
+        var queryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+        axios.get(queryUrl).then(function(response) {
+            var movieTitle = response.data.Title;
+            var relaseYear = response.data.Year;
+            var IMDBRating = response.data.imdbRating;
+            var rottenTomatoesRating = response.data.Ratings[1].Value;
+            var prodCountry = response.data.Country ;
+            var movieLanguage = response.data.Language;
+            var plot = response.data.Plot;
+            var actors = response.data.Actors;
+
+            console.log("Title: " + movieTitle + "\n" + 
+            "Releasing Year: " + relaseYear + "\n" +
+            "IMDB Rating: " + IMDBRating  + "\n" +
+            "Rotten Tomatoes Rating: " + rottenTomatoesRating + "\n" +
+            "Producing Country: " + prodCountry + "\n" +
+            "Language of the movie: " + movieLanguage + "\n" +
+            "Plot: " + plot + "\n" +
+            "Actors: " + actors);
+
+            fs.appendFile("log.txt", "\n" +
+            "Title: " + movieTitle + "\n" + 
+            "Releasing Year: " + relaseYear + "\n" +
+            "IMDB Rating: " + IMDBRating  + "\n" +
+            "Rotten Tomatoes Rating: " + rottenTomatoesRating + "\n" +
+            "Producing Country: " + prodCountry + "\n" +
+            "Language of the movie: " + movieLanguage + "\n" +
+            "Plot: " + plot + "\n" +
+            "Actors: " + actors + "\n" + 
+            "-----------------------------------------------------------", function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+                }); 
+        });
+    } 
+} /*End of Movie-This Function*/
 
 /*Start of Do-What-It-Says Function*/
 var doWhatItSays = function(){}/*End of Do-What-It-Says Function*/
@@ -135,7 +212,7 @@ var order = function(userOrder, inputToInquire){
             break;
         
         case "movie-this":
-            console.log("movieThis()");
+            movieThis(inputToInquire);
             break;
         
         case "do-what-it-says":
