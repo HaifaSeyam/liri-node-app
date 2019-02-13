@@ -198,7 +198,20 @@ var movieThis = function(movie){
 } /*End of Movie-This Function*/
 
 /*Start of Do-What-It-Says Function*/
-var doWhatItSays = function(){}/*End of Do-What-It-Says Function*/
+var doWhatItSays = function(){
+    fs.readFile("random.txt", "utf8", function(err, data) {
+        if(err) throw err;
+        console.log(data);
+
+        var dataArr = data.split(",");
+
+        if (dataArr.length == 2) {
+            order(dataArr[0], dataArr[1]);
+        } else if (dataArr.length == 1) {
+            order(dataArr[0]);
+        }
+    })
+}/*End of Do-What-It-Says Function*/
 
 /*Start of User Order Function*/
 var order = function(userOrder, inputToInquire){
@@ -216,7 +229,7 @@ var order = function(userOrder, inputToInquire){
             break;
         
         case "do-what-it-says":
-            console.log("doWhatItSays()");
+            doWhatItSays();
             break;
     
         default:
