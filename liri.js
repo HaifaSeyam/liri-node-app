@@ -23,7 +23,39 @@ for (var i = 3 ; i < input.length ; i++) {
 }
 
 /*Start of Concert-This Function*/
-var concertThis = function(){}/*End of Concert-This Function*/
+var concertThis = function(artist){
+    if(artist === undefined || artist == null || artist.length <= 0){
+        console.log("Liri can't guess ... which artist are you looking for?");
+        
+    } else {
+        var queryUrl = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+        axios.get(queryUrl).then(
+        function(response) {
+            var lat = response.data[0].venue.latitude;
+            var long = response.data[0].venue.longitude;
+            var city = reverse.lookup(lat, long, 'us').city;
+            var state = reverse.lookup(lat, long, 'us').state_abbr;
+            var zipCode = reverse.lookup(lat, long, 'us').zipcode;
+            var venueName = response.data[0].venue.name;
+            var concertDate = moment(response.data[0].datetime).format("MM/DD/YYYY");
+
+            console.log("Name of the venue: " + venueName + "\n" + 
+                        "Venue location: "  + city + ", " + state + " " + zipCode + "\n" +
+                        "Date of the Event: "  + concertDate + "\n");
+
+            fs.appendFile("log.txt", "\n" +
+                          "Name of the venue: " + venueName + "\n" +
+                          "Venue location: "  + city + ", " + state + " " + zipCode + "\n" +
+                          "Date of the Event: "  + concertDate + "\n" + 
+                          "-----------------------------------------------------------", function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+                });
+
+        });
+    }
+}/*End of Concert-This Function*/
 
 /*Start of Spotify-This Function*/
 var spotifyThis = function(){}/*End of Spotify-This Function*/
@@ -38,7 +70,7 @@ var doWhatItSays = function(){}/*End of Do-What-It-Says Function*/
 var order = function(userOrder, inputToInquire){
     switch(userOrder) {
         case "concert-this":
-            console.log("concertThis()");
+            concertThis(inputToInquire);
             break;
     
         case "spotify-this-song":
