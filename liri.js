@@ -58,7 +58,64 @@ var concertThis = function(artist){
 }/*End of Concert-This Function*/
 
 /*Start of Spotify-This Function*/
-var spotifyThis = function(){}/*End of Spotify-This Function*/
+var spotifyThis = function(song){
+    if(song === undefined || song == null || song.length <= 0){
+        spotifyKeys.search({ type: 'track', query: "Ace of Base" }, function(err, data) {
+            if (err) {
+              return console.log('Error occurred: ' + err);
+            }
+
+            var artistName = data.tracks.items[0].artists[0].name;
+            var songName = data.tracks.items[0].name;
+            var album = data.tracks.items[0].album.name;
+            var previewLink = data.tracks.items[0].external_urls.spotify;
+
+            console.log("Artist(s): " + artistName); 
+            console.log("Song Name: " + songName);
+            console.log("Album: " + album); 
+            console.log("Preview Link: " + previewLink); 
+
+            fs.appendFile("log.txt", "\n" +
+            "Artist(s): " + artistName + "\n" +
+            "Song Name: "  + songName + "\n" +
+            "Album: " + album + "\n" +
+            "Preview Link: "  + previewLink + "\n" + 
+            "-----------------------------------------------------------", function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+                });
+
+          });
+        
+    } else {
+        spotifyKeys.search({ type: 'track', query: song }, function(err, data) {
+            if (err) {
+              return console.log('Error occurred: ' + err);
+            }
+            var artistName = data.tracks.items[0].artists[0].name;
+            var songName = data.tracks.items[0].name;
+            var album = data.tracks.items[0].album.name;
+            var previewLink = data.tracks.items[0].external_urls.spotify;
+
+            console.log("Artist(s): " + artistName); 
+            console.log("Song Name: " + songName);
+            console.log("Album: " + album); 
+            console.log("Preview Link: " + previewLink); 
+
+            fs.appendFile("log.txt", "\n" +
+            "Artist(s): " + artistName + "\n" +
+            "Song Name: "  + songName + "\n" +
+            "Album: " + album + "\n" +
+            "Preview Link: "  + previewLink + "\n" + 
+            "-----------------------------------------------------------", function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+                }); 
+          });
+    }
+}/*End of Spotify-This Function*/
 
 /*Start of Movie-This Function*/
 var movieThis = function(){} /*End of Movie-This Function*/
@@ -74,7 +131,7 @@ var order = function(userOrder, inputToInquire){
             break;
     
         case "spotify-this-song":
-            console.log("spotifyThis()");
+            spotifyThis(inputToInquire);
             break;
         
         case "movie-this":
