@@ -45,9 +45,9 @@ If you hit enter without entering a movie name, you will get information about "
 
 ![liri-node-app](Images/08-movieThis01.png)
 
-4. **You can search for a amovie using the below command line**.
+4. **Log File**.
 
 Each time you search for information, your results will be logged to log.texe file
 
-![liri-node-app](log.txt)
+![liri-node-app](./log.txt)
 
