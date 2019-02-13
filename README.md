@@ -49,5 +49,5 @@ If you hit enter without entering a movie name, you will get information about "
 
 Each time you search for information, your results will be logged to log.texe file
 
-![liri-node-app](./log.txt)
+![liri-node-app](Images/09-log.png)
 
